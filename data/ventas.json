@@ -1,0 +1,33 @@
+[
+    {
+      "id": 1001,
+      "id_usuario": 1,
+      "fecha": "2025-04-20",
+      "total": 195999.49,
+      "direccion": "Calle Falsa 123, Córdoba, Argentina",
+      "productos": [
+        {
+          "id_producto": 101,
+          "cantidad": 1
+        },
+        {
+          "id_producto": 103,
+          "cantidad": 1
+        }
+      ]
+    },
+    {
+      "id": 1002,
+      "id_usuario": 2,
+      "fecha": "2025-04-22",
+      "total": 289999.00,
+      "direccion": "Av. Principal 456, Rosario, Argentina",
+      "productos": [
+        {
+          "id_producto": 102,
+          "cantidad": 1
+        }
+      ]
+    }
+  ]
+  
