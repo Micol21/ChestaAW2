@@ -1,0 +1,9 @@
+# Evitar subir node_modules
+node_modules/
+
+# Archivos temporales o de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de logs
+*.log

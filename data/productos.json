@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "nombre": "Notebook Lenovo",
+    "desc": "Notebook Lenovo IdeaPad 15.6'' Intel i5 8GB RAM 512GB SSD",
+    "precio": 480000,
+    "imagen": "notebook_lenovo.jpg"
+  },
+  {
+    "id": 2,
+    "nombre": "Smartphone Samsung",
+    "desc": "Samsung Galaxy A34 5G 128GB",
+    "precio": 320000,
+    "imagen": "samsung_galaxy_a34.jpg"
+  },
+  {
+    "id": 3,
+    "nombre": "Auriculares Bluetooth",
+    "desc": "Auriculares inalámbricos con cancelación de ruido",
+    "precio": 65000,
+    "imagen": "auriculares_bt.jpg"
+  },
+  {
+    "id": 4,
+    "nombre": "Smart TV LG",
+    "desc": "Smart TV LG 50'' 4K UHD webOS",
+    "precio": 410000,
+    "imagen": "tv_lg_50.jpg"
+  },
+  {
+    "id": 5,
+    "nombre": "Teclado Mecánico",
+    "desc": "Teclado mecánico RGB retroiluminado para gaming",
+    "precio": 32000,
+    "imagen": "teclado_mecanico.jpg"
+  }
+]
