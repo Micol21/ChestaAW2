@@ -1,3 +1,5 @@
+//Es un archivo de texto que le indica a Git qué archivos o carpetas no debe subir al repositorio.
+
 # Evitar subir node_modules
 node_modules/
 
@@ -7,3 +9,18 @@ Thumbs.db
 
 # Archivos de logs
 *.log
+
+
+# Node modules
+node_modules/
+
+# Archivos de entorno
+.env
+
+# Lockfile 
+package-lock.json
+
+# Archivos del sistema (por si usás VS Code)
+.vscode/
+.DS_Store
+Thumbs.db

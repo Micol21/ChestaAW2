@@ -10,15 +10,8 @@
     "id": 2,
     "nombre": "Smartphone Samsung",
     "desc": "Samsung Galaxy A34 5G 128GB",
-    "precio": 320000,
+    "precio": 350000,
     "imagen": "samsung_galaxy_a34.jpg"
-  },
-  {
-    "id": 3,
-    "nombre": "Auriculares Bluetooth",
-    "desc": "Auriculares inalámbricos con cancelación de ruido",
-    "precio": 65000,
-    "imagen": "auriculares_bt.jpg"
   },
   {
     "id": 4,

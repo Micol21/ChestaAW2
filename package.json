@@ -9,9 +9,20 @@
   },
   "author": "Chesta Micol",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "dayjs": "^1.11.13",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
     "nodemon": "^3.1.9"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Micol21/ChestaAW2.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/Micol21/ChestaAW2/issues"
+  },
+  "homepage": "https://github.com/Micol21/ChestaAW2#readme",
+  "description": ""
 }
