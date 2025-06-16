@@ -7,7 +7,7 @@ import express from "express"
 import { readFile, writeFile } from 'fs/promises'//poder leer y escribir en un json
 import productosroutes from './routes/productos.routes.js'
 import fs from 'fs'
-
+import usersroutes from './routes/usuarios.routes.js'
 
 import { get_user_byId } from "./utils/user.js"
 
@@ -26,6 +26,9 @@ const main = async () => {
   const port = process.env.PORT || 3000
 
   app.use(express.json())
+
+  // 2. PARA LEVANTAR NUESTRO FRONEND
+  app.use(express.static('./public'))//todo lo que este en la carpeta public lo va a renderizar
 
   // Rutas
   app.get('/', (req, res) => {
@@ -59,19 +62,11 @@ const main = async () => {
   })
 
   
+//**RUTA DE USUARIOS**//
 
-  app.post('/usuarios/login', (req, res) => {
-    const { usuario, password } = req.body;
+  app.use('/users',usersroutes)
+
   
-    const usuarios = JSON.parse(fs.readFileSync('./data/usuarios.json'));
-    const existe = usuarios.find(u => u.usuario === usuario && u.password === password);
-  
-    if (existe) {
-      res.status(200).json('Login exitoso');
-    } else {
-      res.status(401).json('Credenciales inválidas');
-    }
-  });
 
   //**RUTA DE PRODUCTOS**//
 
@@ -81,10 +76,15 @@ const main = async () => {
     res.status(200).json(userData)
   })
 
-  // 2. ESCUCHAR EL SERVIDOR
+  // 1. ESCUCHAR EL SERVIDOR
   app.listen(port, () => {
     console.log(`Servidor levantado en puerto ${port}`)
   })
+
+  
+ 
+
+  // 3. RUTA DE ENDPOINTS
   
 }
 
