@@ -4,14 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Document</title>
+    <title>Que tal?</title>
 </head>
 <body class="bg-gray-950 text-gray-300">
-    <div class="justify-center items-center mt-10">
-        <div class="bg-gray-800 w-2/6 text-center p-5 rounded-3xl">
-            <p>Hola jhon Dhoe</p>
-        </div>
+   <div class="flex justify-center items-center">
+    <div class="bg-gray-800 rounded-3xl mt-20 p-5" >
+        <h1 class="text-2xl">Inicio de sesión</h1>
+        <input type="text" class="w-full mt-10 bg-gray-700 rounded-2xl p-2 text-gray-200" placeholder="nombre" id="txtName">
+        <input type="password" class="w-full mt-10 bg-gray-700 rounded-2xl p-2 text-gray-200" placeholder="contraseña" id="txtPass">
+
+        <button class="mt-5 bg-transparent p-2 border-2 border-gray-700 rounded-2xl hover:bg-gray-700 transition-all" id="btnLogin">
+            Ingresar
+        </button>
     </div>
-    
+   </div>
+   <script type="module" src="../../auth/auth.js"></script>
+   //<div id="contenedor-productos"></div>
 </body>
 </html>
