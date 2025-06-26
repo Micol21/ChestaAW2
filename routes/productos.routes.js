@@ -1,19 +1,61 @@
 import { Router } from "express"
-import { readFile, writeFile } from 'fs/promises'
-import { buscarPorIdEnArchivo } from '../utils/archivo.js'
-
+import { createProd } from "../db/actions/product.actions.js"
+import Venta from '../db/schemas/venta.schema.js' 
+import mongoose from 'mongoose'
+import Product from '../db/schemas/product.schema.js'
+import connectToDatabase from '../db/connection.js'
 
 const router = Router()
 
+// POST: Crear producto
+router.post('/create', async (req, res) => {
+  const { name, desc, price, stock, categoria } = req.body
+
+  try {
+    const result = await createProd(name, desc, price, stock, categoria) 
+    console.log("Producto creado:", result)
+    res.status(200).json({
+      mensaje: "Producto creado correctamente",
+      producto: result
+    })
+  } catch (error) {
+    console.error("Error en /create:", error)
+    res.status(500).json({ error: error.message || "Error interno" })
+  }
+})
 
 // GET: Listar todos los productos
 router.get('/', async (req, res) => {
   try {
-    const data = await readFile('./data/productos.json', 'utf-8')
-    const productos = JSON.parse(data)
+    await connectToDatabase()
+    const productos = await Product.find()
     res.status(200).json(productos)
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al obtener los productos', error })
+  }
+})
+
+// GET: Filtrar productos por categoría
+router.get('/categoria/:categoria', async (req, res) => {
+  const categoria = req.params.categoria.trim() 
+  console.log("Buscando categoría:", categoria)
+
+  try {
+    await connectToDatabase()
+    const productos = await Product.find({
+      categoria: { $regex: new RegExp(`^${categoria}$`, "i") } 
+    })
+
+    console.log("Resultados encontrados:", productos.length)
+
+    if (productos.length === 0) {
+      return res.status(404).json({ mensaje: 'No se encontraron productos en esta categoría' })
+    }
+
+    res.status(200).json(productos)
+  } catch (error) {
+    console.error("Error al buscar productos por categoría:", error)
+    res.status(500).json({ mensaje: 'Error en la búsqueda', error })
   }
 })
 
@@ -23,7 +65,11 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const id = req.params.id
-    const producto = await buscarPorIdEnArchivo('./data/productos.json', id)
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json('ID no válido')
+    }
+
+    const producto = await Product.findById(id)
 
     if (producto) {
       res.status(200).json(producto)
@@ -35,58 +81,56 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-
-// PUT: Actualizar precio
+// PUT: Actualizar precio de un producto
 router.put('/:id', async (req, res) => {
+  const id = req.params.id
+  const nuevoPrecio = req.body.price
+  await connectToDatabase()
   try {
-    const id = req.params.id
-    const nuevoPrecio = req.body.precio
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ mensaje: 'ID no válido' })
+    }
 
-    const file = await readFile('./data/productos.json', 'utf-8')
-    const productos = JSON.parse(file)
+    const productoActualizado = await Product.findByIdAndUpdate(
+      id,
+      { price: nuevoPrecio },
+      { new: true }
+    )
 
-    const index = productos.findIndex(producto => producto.id == id)
-
-    if (index !== -1) {
-      productos[index].precio = nuevoPrecio
-      await writeFile('./data/productos.json', JSON.stringify(productos, null, 2))
-      res.status(200).json({ mensaje: 'Precio actualizado correctamente', producto: productos[index] })
+    if (productoActualizado) {
+      res.status(200).json({
+        mensaje: 'Precio actualizado correctamente',
+        producto: productoActualizado
+      })
     } else {
       res.status(404).json({ mensaje: 'Producto no encontrado' })
     }
   } catch (error) {
+    console.error("Error detallado:", error)
     res.status(500).json({ mensaje: 'Error al actualizar el precio', error })
   }
 })
 
-//DELETE Eliminar producto 
+// DELETE: Eliminar producto
 router.delete('/delete/:productoID', async (req, res) => {
+  const producto_ID = req.params.productoID
+
   try {
-    const producto_ID = req.params.productoID
-
-    // Leer productos
-    const file = await readFile('./data/productos.json', 'utf-8')
-    const productos = JSON.parse(file)
-
-    // Leer ventas
-    const ventasFile = await readFile('./data/ventas.json', 'utf-8')
-    const ventas = JSON.parse(ventasFile)
-
-    // Verificar si el producto está en alguna venta (estructura con objetos)
-    const productoEnVenta = ventas.some(venta =>
-      venta.productos &&
-      venta.productos.some(p => p.id_producto == producto_ID)
-    )
-
-    if (productoEnVenta) {
-      return res.status(400).json('No se puede eliminar el producto porque está asociado a una venta')
+    if (!mongoose.Types.ObjectId.isValid(producto_ID)) {
+      return res.status(400).json('ID de producto no válido')
     }
 
-    const index = productos.findIndex(e => e.id == producto_ID)
+    const productoEnVenta = await Venta.findOne({
+      productos: { $elemMatch: { id_producto: Number(producto_ID) } }
+    })
 
-    if (index !== -1) {
-      productos.splice(index, 1)
-      await writeFile('./data/productos.json', JSON.stringify(productos, null, 2))
+    if (productoEnVenta) {
+      return res.status(400).json('No se puede eliminar: producto asociado a una venta')
+    }
+
+    const resultado = await Product.findByIdAndDelete(producto_ID)
+
+    if (resultado) {
       res.status(200).json('Producto eliminado correctamente')
     } else {
       res.status(404).json('No se pudo encontrar el producto')
@@ -96,7 +140,6 @@ router.delete('/delete/:productoID', async (req, res) => {
     res.status(500).json('Error al eliminar producto')
   }
 })
-
 
 
 

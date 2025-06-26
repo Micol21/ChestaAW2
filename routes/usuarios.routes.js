@@ -1,96 +1,125 @@
-import { Router } from "express";
-import { readFile, writeFile } from 'fs/promises';
+import { Router } from "express"
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import dotenv from "dotenv"
+import User from "../db/schemas/user.schema.js"
+import connectToDatabase from "../db/connection.js"
 
-const router = Router();
+dotenv.config()
 
-// Función asincrónica para leer el archivo y devolver el array de usuarios
-const getUserData = async () => {
-  try {
-    const file = await readFile('./data/users.json', 'utf-8');
-    return JSON.parse(file || '[]');
-  } catch (err) {
-    console.error("Error al leer users.json:", err.message);
-    return []; // En caso de error, devuelve un array vacío
-  }
-};
+const router = Router()
 
-// Ruta POST /login
+// POST: Login
 router.post('/login', async (req, res) => {
-  const { userName, pass } = req.body;
+  const { username, pass } = req.body 
 
-  const userData = await getUserData();
+  try {
+    await connectToDatabase()
 
-  const result = userData.find(e => e.username === userName && e.pass === pass);
+    const user = await User.findOne({ username }) 
 
-  if (result) {
-    const data = {
-      name: result.name,
-      lastName: result.lastname,
-      userName: result.username,
-      status: true
-    };
-    res.status(200).json(data);
-  } else {
-    res.status(400).json({ status: false });
+    if (!user) {
+      return res.status(404).json({ status: false, mensaje: 'Usuario no encontrado' })
+    }
+
+    const controlPass = bcrypt.compareSync(pass, user.pass)
+    if (!controlPass) {
+      return res.status(401).json({ status: false, mensaje: 'Contraseña incorrecta' })
+    }
+
+    
+    const token = jwt.sign(
+      {
+        name: user.name,
+        lastname: user.lastname,
+        username: user.username,
+        id: user.id
+      },
+      process.env.SECRET,
+      { expiresIn: 86400 } 
+    )
+
+    
+    const userSinPass = {
+      id: user.id,
+      name: user.name,
+      lastname: user.lastname,
+      username: user.username
+    }
+
+    
+    res.status(200).json({ status: true, token, user: userSinPass }) 
+
+  } catch (error) {
+    console.error('Error en login:', error)
+    res.status(500).json({ status: false, mensaje: error.message })
   }
-});
+})
 
-// PUT: Actualizar contraseña de un usuario por ID
+
+
+
+// PUT: Actualizar contraseña
 router.put('/:id', async (req, res) => {
   try {
-    const id = parseInt(req.params.id);
-    const nuevaPass = req.body.pass;
+    const mongoID = req.params.id
+    const nuevaPass = req.body.pass
+    const hashedPass = bcrypt.hashSync(nuevaPass, 8)
 
-    const usuarios = await getUserData();
-    const index = usuarios.findIndex(u => u.id === id);
+    await connectToDatabase()
 
-    if (index !== -1) {
-      usuarios[index].pass = nuevaPass;
-      await writeFile('./data/users.json', JSON.stringify(usuarios, null, 2));
-      res.status(200).json({ mensaje: 'Contraseña actualizada correctamente', usuario: usuarios[index] });
+    const usuario = await User.findByIdAndUpdate(
+      mongoID,
+      { pass: hashedPass },
+      { new: true }
+    )
+
+    if (usuario) {
+      res.status(200).json({ mensaje: 'Contraseña actualizada correctamente', usuario })
     } else {
-      res.status(404).json({ mensaje: 'Usuario no encontrado' });
+      res.status(404).json({ mensaje: 'Usuario no encontrado' })
     }
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al actualizar contraseña', error });
+    res.status(500).json({ mensaje: 'Error al actualizar contraseña', error })
   }
-});
+})
 
 
-// POST: Registro de nuevo usuario
+
+// POST: Registro
 router.post('/register', async (req, res) => {
-  const { name, lastname, username, pass } = req.body;
+  const { name, lastname, username, pass } = req.body
 
   if (!name || !lastname || !username || !pass) {
-    return res.status(400).json({ mensaje: "Faltan datos para registrar el usuario." });
+    return res.status(400).json({ mensaje: "Faltan datos para registrar el usuario." })
   }
 
   try {
-    const usuarios = await getUserData();
+    await connectToDatabase()
 
-    // Verificar si ya existe el username
-    const existe = usuarios.some(user => user.username === username);
-
+    const existe = await User.findOne({ username })
     if (existe) {
-      return res.status(409).json({ mensaje: "El nombre de usuario ya está en uso." });
+      return res.status(409).json({ mensaje: "El nombre de usuario ya está en uso." })
     }
 
-    // Crear nuevo usuario con ID automático
-    const nuevoUsuario = {
+    const hashedPass = bcrypt.hashSync(pass, 8)
+
+    // Obtener el último ID existente
+    const ultimo = await User.findOne().sort({ id: -1 }).limit(1)
+    const nuevoID = ultimo ? ultimo.id + 1 : 101
+
+    const nuevoUsuario = await User.create({
       name,
       lastname,
       username,
-      pass,
-      id: usuarios.length > 0 ? usuarios[usuarios.length - 1].id + 1 : 101
-    };
+      pass: hashedPass,
+      id: nuevoID
+    })
 
-    usuarios.push(nuevoUsuario);
-    await writeFile('./data/users.json', JSON.stringify(usuarios, null, 2));
-
-    res.status(201).json({ mensaje: "Usuario registrado exitosamente", usuario: nuevoUsuario });
+    res.status(201).json({ mensaje: "Usuario registrado exitosamente", usuario: nuevoUsuario })
   } catch (error) {
-    res.status(500).json({ mensaje: "Error al registrar el usuario", error });
+    res.status(500).json({ mensaje: "Error al registrar el usuario", error })
   }
-});
+})
 
-export default router;
+export default router

@@ -1,7 +1,17 @@
-export const addSession = (user)=>{
-    sessionStorage.getItem('user',JSON.stringify(user))//PUEDE GUARDAR UN OBJETO EN FORMATO DE TEXTO
-}
 
-export const getSession = ()=> {//obtener la informacion de la sesion del navegador 
+  
+export const getSession = () => {
     return JSON.parse(sessionStorage.getItem('user'))
-}
+  }
+  
+  export const addSession = (token, user) => {
+    sessionStorage.setItem("token", token)
+    sessionStorage.setItem("user", JSON.stringify(user))
+  }
+  
+  export const clearSession = () => {
+    sessionStorage.removeItem("token")
+    sessionStorage.removeItem("user")
+  }
+  
+  

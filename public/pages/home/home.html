@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <title>Inicio | Tienda</title>
+  
+  <link rel="stylesheet" href="../../styles/tailwind.css">
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+  <header class="p-4 bg-gray-800 flex justify-between items-center">
+    <h1 class="text-xl font-bold">Tienda Online</h1>
+    <nav>
+      <a href="./filtrar.html" class="mr-4 hover:underline">Filtrar productos</a>
+      <a href="./carrito.html" class="hover:underline">Carrito 🛒</a>
+    </nav>
+  </header>
+
+  <main class="p-6">
+    <h2 class="text-2xl mb-4">Productos en venta</h2>
+    <section id="productosContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+     
+    </section>
+  </main>
+
+  <script type="module" src="../../js/home.controller.js"></script>
+ 
+
+</body>
+</html>

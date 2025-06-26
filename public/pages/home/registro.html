@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-gray-200 flex justify-center items-center h-screen">
+  <div class="bg-gray-800 p-8 rounded-3xl w-[400px]">
+    <h2 class="text-2xl font-bold mb-6 text-center">Registro de usuario</h2>
+
+    <input type="text" id="txtNombre" placeholder="Nombre" class="w-full mb-4 p-2 rounded-xl bg-gray-700 text-white">
+    <input type="text" id="txtApellido" placeholder="Apellido" class="w-full mb-4 p-2 rounded-xl bg-gray-700 text-white">
+    <input type="text" id="txtUsername" placeholder="Nombre de usuario" class="w-full mb-4 p-2 rounded-xl bg-gray-700 text-white">
+    <input type="password" id="txtPass" placeholder="Contraseña" class="w-full mb-6 p-2 rounded-xl bg-gray-700 text-white">
+
+    <button id="btnRegistrar" class="w-full bg-blue-600 hover:bg-blue-700 p-2 rounded-xl transition-all">Registrarse</button>
+    <p id="mensaje" class="text-sm mt-4 text-center"></p>
+  </div>
+
+  <script type="module" src="../../auth/registro.js"></script>
+</body>
+</html>
