@@ -1,18 +1,27 @@
 import { Router } from "express"
 import { createProd } from "../db/actions/product.actions.js"
-import Venta from '../db/schemas/venta.schema.js' 
+import Venta from '../db/schemas/venta.schema.js'
 import mongoose from 'mongoose'
 import Product from '../db/schemas/product.schema.js'
 import connectToDatabase from '../db/connection.js'
+import { syncToJsonFile } from '../utils/syncFile.js'
+import path from 'path'
+import { readFile } from 'fs/promises'
 
 const router = Router()
 
-// POST: Crear producto
+// POST: Crear producto y sincronizar archivo
 router.post('/create', async (req, res) => {
   const { name, desc, price, stock, categoria } = req.body
 
   try {
-    const result = await createProd(name, desc, price, stock, categoria) 
+    const result = await createProd(name, desc, price, stock, categoria)
+
+    
+    const db = await connectToDatabase()
+    const ruta = path.resolve('./data/productos.json')
+    await syncToJsonFile(ruta, db.collection('productos'))
+
     console.log("Producto creado:", result)
     res.status(200).json({
       mensaje: "Producto creado correctamente",
@@ -24,29 +33,29 @@ router.post('/create', async (req, res) => {
   }
 })
 
-// GET: Listar todos los productos
+// GET: Listar productos desde archivo
 router.get('/', async (req, res) => {
   try {
-    await connectToDatabase()
-    const productos = await Product.find()
-    res.status(200).json(productos)
+    const ruta = path.resolve('./data/productos.json')
+    const file = await readFile(ruta, 'utf-8')
+    const productos = JSON.parse(file || '[]')
+
+    res.json(productos)
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al obtener los productos', error })
+    console.error('Error al leer productos.json:', error)
+    res.status(500).json({ status: false, mensaje: 'Error al obtener productos' })
   }
 })
 
-// GET: Filtrar productos por categoría
+// GET: Filtrar por categoría (Mongo)
 router.get('/categoria/:categoria', async (req, res) => {
-  const categoria = req.params.categoria.trim() 
-  console.log("Buscando categoría:", categoria)
+  const categoria = req.params.categoria.trim()
 
   try {
     await connectToDatabase()
     const productos = await Product.find({
-      categoria: { $regex: new RegExp(`^${categoria}$`, "i") } 
+      categoria: { $regex: new RegExp(`^${categoria}$`, "i") }
     })
-
-    console.log("Resultados encontrados:", productos.length)
 
     if (productos.length === 0) {
       return res.status(404).json({ mensaje: 'No se encontraron productos en esta categoría' })
@@ -58,8 +67,6 @@ router.get('/categoria/:categoria', async (req, res) => {
     res.status(500).json({ mensaje: 'Error en la búsqueda', error })
   }
 })
-
-
 
 // GET: Buscar por ID
 router.get('/:id', async (req, res) => {
@@ -81,12 +88,14 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-// PUT: Actualizar precio de un producto
+// PUT: Actualizar precio y sincronizar archivo
 router.put('/:id', async (req, res) => {
   const id = req.params.id
   const nuevoPrecio = req.body.price
-  await connectToDatabase()
+
   try {
+    await connectToDatabase()
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ mensaje: 'ID no válido' })
     }
@@ -98,6 +107,11 @@ router.put('/:id', async (req, res) => {
     )
 
     if (productoActualizado) {
+      // Sincronizar archivo
+      const db = await connectToDatabase()
+      const ruta = path.resolve('./data/productos.json')
+      await syncToJsonFile(ruta, db.collection('productos'))
+
       res.status(200).json({
         mensaje: 'Precio actualizado correctamente',
         producto: productoActualizado
@@ -111,11 +125,13 @@ router.put('/:id', async (req, res) => {
   }
 })
 
-// DELETE: Eliminar producto
+// DELETE: Eliminar producto y sincronizar archivo
 router.delete('/delete/:productoID', async (req, res) => {
   const producto_ID = req.params.productoID
 
   try {
+    await connectToDatabase()
+
     if (!mongoose.Types.ObjectId.isValid(producto_ID)) {
       return res.status(400).json('ID de producto no válido')
     }
@@ -131,6 +147,11 @@ router.delete('/delete/:productoID', async (req, res) => {
     const resultado = await Product.findByIdAndDelete(producto_ID)
 
     if (resultado) {
+      
+      const db = await connectToDatabase()
+      const ruta = path.resolve('./data/productos.json')
+      await syncToJsonFile(ruta, db.collection('productos'))
+
       res.status(200).json('Producto eliminado correctamente')
     } else {
       res.status(404).json('No se pudo encontrar el producto')
@@ -141,6 +162,5 @@ router.delete('/delete/:productoID', async (req, res) => {
   }
 })
 
-
-
 export default router
+

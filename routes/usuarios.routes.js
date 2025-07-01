@@ -4,6 +4,9 @@ import jwt from 'jsonwebtoken'
 import dotenv from "dotenv"
 import User from "../db/schemas/user.schema.js"
 import connectToDatabase from "../db/connection.js"
+import { syncToJsonFile } from '../utils/syncFile.js'
+import path from 'path'
+import { readFile } from 'fs/promises'
 
 dotenv.config()
 
@@ -27,7 +30,6 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ status: false, mensaje: 'Contraseña incorrecta' })
     }
 
-    
     const token = jwt.sign(
       {
         name: user.name,
@@ -39,7 +41,6 @@ router.post('/login', async (req, res) => {
       { expiresIn: 86400 } 
     )
 
-    
     const userSinPass = {
       id: user.id,
       name: user.name,
@@ -47,17 +48,13 @@ router.post('/login', async (req, res) => {
       username: user.username
     }
 
-    
-    res.status(200).json({ status: true, token, user: userSinPass }) 
+    res.status(200).json({ status: true, token, user: userSinPass })
 
   } catch (error) {
     console.error('Error en login:', error)
     res.status(500).json({ status: false, mensaje: error.message })
   }
 })
-
-
-
 
 // PUT: Actualizar contraseña
 router.put('/:id', async (req, res) => {
@@ -75,6 +72,10 @@ router.put('/:id', async (req, res) => {
     )
 
     if (usuario) {
+      const db = await connectToDatabase()
+      const ruta = path.resolve('./data/users.json')
+      await syncToJsonFile(ruta, db.collection('users'))
+
       res.status(200).json({ mensaje: 'Contraseña actualizada correctamente', usuario })
     } else {
       res.status(404).json({ mensaje: 'Usuario no encontrado' })
@@ -83,8 +84,6 @@ router.put('/:id', async (req, res) => {
     res.status(500).json({ mensaje: 'Error al actualizar contraseña', error })
   }
 })
-
-
 
 // POST: Registro
 router.post('/register', async (req, res) => {
@@ -98,6 +97,7 @@ router.post('/register', async (req, res) => {
     await connectToDatabase()
 
     const existe = await User.findOne({ username })
+    console.log("Usuario encontrado:", existe)
     if (existe) {
       return res.status(409).json({ mensaje: "El nombre de usuario ya está en uso." })
     }
@@ -116,9 +116,51 @@ router.post('/register', async (req, res) => {
       id: nuevoID
     })
 
+    const db = await connectToDatabase()
+    const ruta = path.resolve('./data/users.json')
+    const todosLosUsuarios = await User.find()
+    await syncToJsonFile(ruta, todosLosUsuarios) 
+
     res.status(201).json({ mensaje: "Usuario registrado exitosamente", usuario: nuevoUsuario })
   } catch (error) {
     res.status(500).json({ mensaje: "Error al registrar el usuario", error })
+  }
+})
+
+// DELETE: Eliminar usuario por ID
+router.delete('/:id', async (req, res) => {
+  try {
+    await connectToDatabase()
+
+    const mongoID = req.params.id
+    const usuarioEliminado = await User.findByIdAndDelete(mongoID)
+
+    if (!usuarioEliminado) {
+      return res.status(404).json({ mensaje: 'Usuario no encontrado' })
+    }
+
+    const db = await connectToDatabase()
+    const ruta = path.resolve('./data/users.json')
+    await syncToJsonFile(ruta, db.collection('users'))
+
+    res.status(200).json({ mensaje: 'Usuario eliminado correctamente' })
+  } catch (error) {
+    res.status(500).json({ mensaje: 'Error al eliminar el usuario', error })
+  }
+})
+
+// GET: Listar usuarios desde archivo JSON (sin contraseña)
+router.get('/json', async (req, res) => {
+  try {
+    const ruta = path.resolve('./data/users.json')
+    const file = await readFile(ruta, 'utf-8')
+    const users = JSON.parse(file || '[]')
+
+    const usersSinPass = users.map(({ pass, ...rest }) => rest)
+
+    res.status(200).json(usersSinPass)
+  } catch (error) {
+    res.status(500).json({ mensaje: 'Error al leer users.json', error })
   }
 })
 

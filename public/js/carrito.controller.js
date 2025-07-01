@@ -1,7 +1,6 @@
 import { obtenerCarritoActual } from './carrito.utils.js'
 import { getSession } from '../../utils/sessionstorage.controller.js'
 
-
 const carrito = obtenerCarritoActual()
 
 const cartContainer = document.getElementById('cartItems')
@@ -23,16 +22,22 @@ async function cargarCarrito() {
     let total = 0
 
     carrito.forEach(item => {
-      const producto = productos.find(p => p._id === item.id)
+      const producto = productos.find(p => {
+        // Compara tanto _id (de Mongo) como id (de archivo)
+        return p._id === item.id || p.id === item.id
+      })
+
       if (producto) {
-        const subtotal = parseFloat(producto.price) * item.cantidad
+        const precio = producto.price || producto.precio || 0
+        const nombre = producto.name || producto.nombre || 'Producto'
+        const subtotal = parseFloat(precio) * item.cantidad
         total += subtotal
 
         const div = document.createElement('div')
         div.className = "bg-gray-700 p-4 rounded flex justify-between items-center"
         div.innerHTML = `
           <div>
-            <h3 class="font-bold">${producto.name}</h3>
+            <h3 class="font-bold">${nombre}</h3>
             <p class="text-sm text-gray-300">${producto.desc}</p>
             <p class="text-sm text-gray-400">Cantidad: ${item.cantidad}</p>
           </div>
@@ -52,7 +57,6 @@ async function cargarCarrito() {
 }
 
 btnCheckout.addEventListener('click', async () => {
-  
   const token = sessionStorage.getItem('token')
   const user = getSession()
   const clave = `carrito_${user?.id}`
@@ -61,21 +65,21 @@ btnCheckout.addEventListener('click', async () => {
   if (!token || !user?.id) return alert("Debes iniciar sesión para comprar.")
   if (carrito.length === 0) return alert("Tu carrito está vacío.")
 
- 
   const productosResponse = await fetch('http://localhost:5000/productos/')
   const productos = await productosResponse.json()
 
   let total = 0
   carrito.forEach(item => {
-    const prod = productos.find(p => p._id === item.id)
-    if (prod) total += prod.price * item.cantidad
+    const prod = productos.find(p => p._id === item.id || p.id === item.id)
+    const precio = prod?.price || prod?.precio || 0
+    total += precio * item.cantidad
   })
 
   const ventaData = {
-    id_usuario: user.id,
+    id_usuario: Number(user.id),
     total,
-    direccion: "Dirección de prueba", 
-    productos: carrito.map(p => ({ id: p.id, cantidad: p.cantidad }))
+    direccion: "Dirección de prueba",
+    productos: carrito.map(p => ({ id_producto: Number(p.id), cantidad: p.cantidad }))
   }
 
   try {

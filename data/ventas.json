@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "_id": "68588e31d3fa4a77b73f57e9",
     "id_usuario": 2,
     "fecha": "2025-05-05",
     "total": 545000,
@@ -8,16 +8,19 @@
     "productos": [
       {
         "id_producto": 1,
-        "cantidad": 1
+        "cantidad": 1,
+        "_id": "68588e31d3fa4a77b73f57ea"
       },
       {
         "id_producto": 3,
-        "cantidad": 1
+        "cantidad": 1,
+        "_id": "68588e31d3fa4a77b73f57eb"
       }
-    ]
+    ],
+    "__v": 0
   },
   {
-    "id": 2,
+    "_id": "68588e31d3fa4a77b73f57ec",
     "id_usuario": 1,
     "fecha": "2025-05-03",
     "total": 352000,
@@ -25,13 +28,165 @@
     "productos": [
       {
         "id_producto": 2,
-        "cantidad": 1
+        "cantidad": 1,
+        "_id": "68588e31d3fa4a77b73f57ed"
       },
       {
         "id_producto": 5,
-        "cantidad": 1
+        "cantidad": 1,
+        "_id": "68588e31d3fa4a77b73f57ee"
       }
-    ]
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "685d8f9ee96a688ca7e7112f",
+    "id_usuario": 103,
+    "fecha": "2025-06-26",
+    "total": 1234,
+    "direccion": "Dirección de prueba",
+    "productos": [
+      {
+        "cantidad": 1,
+        "_id": "685d8f9ee96a688ca7e71130"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "685d901be96a688ca7e71138",
+    "id_usuario": 106,
+    "fecha": "2025-06-26",
+    "total": 1199456,
+    "direccion": "Dirección de prueba",
+    "productos": [
+      {
+        "cantidad": 1,
+        "_id": "685d901be96a688ca7e71139"
+      },
+      {
+        "cantidad": 1,
+        "_id": "685d901be96a688ca7e7113a"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "685d9dade96a688ca7e71161",
+    "id_usuario": 107,
+    "fecha": "2025-06-26",
+    "total": 442000,
+    "direccion": "Dirección de prueba",
+    "productos": [
+      {
+        "cantidad": 1,
+        "_id": "685d9dade96a688ca7e71162"
+      },
+      {
+        "cantidad": 1,
+        "_id": "685d9dade96a688ca7e71163"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "6862e2b0eaf3076087365a39",
+    "id_usuario": 106,
+    "fecha": "2025-06-30",
+    "total": 1588911,
+    "direccion": "Dirección de prueba",
+    "productos": [
+      {
+        "cantidad": 2,
+        "_id": "6862e2b0eaf3076087365a3a"
+      },
+      {
+        "cantidad": 1,
+        "_id": "6862e2b0eaf3076087365a3b"
+      },
+      {
+        "cantidad": 1,
+        "_id": "6862e2b0eaf3076087365a3c"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "68634dc076bd2451459a0244",
+    "id_usuario": 115,
+    "fecha": "2025-07-01",
+    "total": 1199456,
+    "direccion": "Dirección de prueba",
+    "productos": [
+      {
+        "cantidad": 1,
+        "_id": "68634dc076bd2451459a0245"
+      },
+      {
+        "cantidad": 1,
+        "_id": "68634dc076bd2451459a0246"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "686350f476bd2451459a0249",
+    "id_usuario": 106,
+    "fecha": "2025-07-01",
+    "total": 789456,
+    "direccion": "Dirección de prueba",
+    "productos": [
+      {
+        "id_producto": null,
+        "cantidad": 1,
+        "_id": "686350f476bd2451459a024a"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "6863512faf9791d5bc632b27",
+    "id_usuario": 106,
+    "fecha": "2025-07-01",
+    "total": 789456,
+    "direccion": "Dirección de prueba",
+    "productos": [
+      {
+        "id_producto": null,
+        "cantidad": 1,
+        "_id": "6863512faf9791d5bc632b28"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "68635f1ee3401e6fbef7d69e",
+    "id_usuario": 106,
+    "fecha": "2025-07-01",
+    "total": 789456,
+    "direccion": "Dirección de prueba",
+    "productos": [
+      {
+        "id_producto": null,
+        "cantidad": 1,
+        "_id": "68635f1ee3401e6fbef7d69f"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "686362be0a340b2f494b99de",
+    "id_usuario": 106,
+    "fecha": "2025-07-01",
+    "total": 789456,
+    "direccion": "Dirección de prueba",
+    "productos": [
+      {
+        "id_producto": null,
+        "cantidad": 1,
+        "_id": "686362be0a340b2f494b99df"
+      }
+    ],
+    "__v": 0
   }
 ]
-  

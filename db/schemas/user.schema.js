@@ -4,7 +4,7 @@ const { Schema, model, models } = mongoose
 const UserSchema = new Schema({
   name: String,
   lastname: String,
-  username: String,
+  username: { type: String, unique: true },
   pass: String,
   id: Number
 })

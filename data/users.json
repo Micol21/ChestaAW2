@@ -1,16 +1,137 @@
 [
   {
+    "_id": "68588e31d3fa4a77b73f57e6",
     "name": "Micol",
     "lastname": "Chesta",
     "username": "michesta",
-    "pass": "$2b$08$sUVmjilWWHh4eUSWd5quEuZnlCh6oqjqo9a5uACr9ZR.P1B/qUsLC",
-    "id": 101
+    "pass": "$2b$08$.tZqxxAvYtR26ypKsrTQX.DKhihGcXbDBzjhFJJkGdvtX1ev3EdlK",
+    "id": 101,
+    "__v": 0
   },
   {
+    "_id": "68588e31d3fa4a77b73f57e7",
     "name": "Lucas",
     "lastname": "Fernandez",
     "username": "lucasf",
     "pass": "$2b$08$F4WY/IOxzpasOkmPacfGce05TKDxLAGiTyQz2rdnvgmAh4avicWbK",
-    "id": 102
+    "id": 102,
+    "__v": 0
+  },
+  {
+    "_id": "6858dcea8c7baf54b9543e80",
+    "name": "Micol",
+    "lastname": "Chesta",
+    "username": "micolc",
+    "pass": "$2b$08$qXOzOj6FyqK4lsHQBPszxuli0eUeoGMOVFRfT6MRjJXxCgoNuYpE6",
+    "id": 103,
+    "__v": 0
+  },
+  {
+    "_id": "6859d386b0901076b4e52058",
+    "name": "Ana",
+    "lastname": "López",
+    "username": "anita123",
+    "pass": "$2b$08$D/ICeXTXzREs16uP9geMteyYg.twRA9rlGJF/g8OeuXLotuCfWlqi",
+    "id": 104,
+    "__v": 0
+  },
+  {
+    "_id": "6859fa4fb0901076b4e5205c",
+    "name": "Prueba",
+    "lastname": "DesdeFrontend",
+    "username": "prueba123",
+    "pass": "$2b$08$fE2mAQLYxD5T6Gt3dPgXmeedPGNEYN2fbhvCZlI1fs6djVswzV6DG",
+    "id": 105,
+    "__v": 0
+  },
+  {
+    "_id": "6859fc745ebe46fc0a2fbcbe",
+    "name": "MICOL SOLEDAD",
+    "lastname": "CHESTA MIRANDA",
+    "username": "mico222",
+    "pass": "$2b$08$prmA.N8Y4ZpdYJLxAZWJMOakBk.l8zdCgiJCKtHBHpaaOlvSgvFWG",
+    "id": 106,
+    "__v": 0
+  },
+  {
+    "_id": "685d9d87e96a688ca7e71157",
+    "name": "Soledad Andrea",
+    "lastname": "Miranda",
+    "username": "sole1979",
+    "pass": "$2b$08$RBufNUd9Maowu1AinSLQYOerclw1BAJ6vysniEqiewYm5wTr3jMxy",
+    "id": 107,
+    "__v": 0
+  },
+  {
+    "_id": "68633755eaf3076087365a40",
+    "name": "Roberto",
+    "lastname": "Ramirez",
+    "username": "Robert21",
+    "pass": "$2b$08$d.ZJ.7r6sK/6Tc3dP03CQuRrk0k/45CA3iLCkCBGoy1KmjezauoEy",
+    "id": 108,
+    "__v": 0
+  },
+  {
+    "_id": "686341e1548ab5ff6317308b",
+    "name": "Luisa",
+    "lastname": "Lopez",
+    "username": "Luisa11",
+    "pass": "$2b$08$L3e3oB4R2wAZoz89Vn/tJ.Kgr6D7cZIgMH.2GrPY3EdQXJoWkEpFO",
+    "id": 109,
+    "__v": 0
+  },
+  {
+    "_id": "686345dcfc0a1b4f07ee24ca",
+    "name": "Agustina",
+    "lastname": "Encina",
+    "username": "Agus22",
+    "pass": "$2b$08$Rh8fQD62vx/8H0/lVtihq.s8.xswGzSrKssDNmTbDCkh7voLEPmfS",
+    "id": 110,
+    "__v": 0
+  },
+  {
+    "_id": "6863473f59901b5479d4b7e9",
+    "name": "Joaquin",
+    "lastname": "soliz",
+    "username": "Joa45",
+    "pass": "$2b$08$N1apvOmuZGzHp4smX4Q3NeKQZYinBbverTBLBfbulToYIHO8a4FU.",
+    "id": 111,
+    "__v": 0
+  },
+  {
+    "_id": "68634a5976bd2451459a022f",
+    "name": "Lupe",
+    "lastname": "Torres",
+    "username": "Lup66",
+    "pass": "$2b$08$O/J2NTF.L0szFuLyBgxHeej6JS1D2zoffb.QWn1MCH0ShyPkREJyi",
+    "id": 112,
+    "__v": 0
+  },
+  {
+    "_id": "68634b1876bd2451459a0236",
+    "name": "Lupe",
+    "lastname": "Torres",
+    "username": "Lup88",
+    "pass": "$2b$08$6LCGo9PiQurbaJkluif6CupJEsfGxPQkl5ebkmgl3oAkVI2Oqt29u",
+    "id": 113,
+    "__v": 0
+  },
+  {
+    "_id": "68634d3976bd2451459a023b",
+    "name": "Lupe",
+    "lastname": "Torres",
+    "username": "Lup99",
+    "pass": "$2b$08$QH3QQ.17Z60ur/.JfbfwuODvISIbI7JZZOlyc0QW28vnJh7jPK3qi",
+    "id": 114,
+    "__v": 0
+  },
+  {
+    "_id": "68634d8e76bd2451459a0240",
+    "name": "Lupe",
+    "lastname": "Torres",
+    "username": "Lup33",
+    "pass": "$2b$08$TrWo58lz5rJodL0QGqeWTeqjNVhnj.uxOVp9Q6xtKjQuDD.F2RqAm",
+    "id": 115,
+    "__v": 0
   }
 ]

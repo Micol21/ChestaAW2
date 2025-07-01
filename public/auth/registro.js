@@ -19,14 +19,16 @@ document.getElementById('btnRegistrar').addEventListener('click', async () => {
       })
   
       const data = await response.json()
-  
+      console.log("Respuesta del servidor:", data, response.status)
+
       if (response.ok) {
         mensaje.textContent = "Usuario registrado correctamente"
         mensaje.classList.remove("text-red-400")
         mensaje.classList.add("text-green-400")
   
         setTimeout(() => {
-          window.location.href = "./index.html"  
+          alert("Redirigiendo...")
+          window.location.href = "pages/home/index.html"  
         }, 1500)
   
       } else {
