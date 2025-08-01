@@ -23,7 +23,7 @@ async function cargarCarrito() {
 
     carrito.forEach(item => {
       const producto = productos.find(p => {
-        // Compara tanto _id (de Mongo) como id (de archivo)
+        
         return p._id === item.id || p.id === item.id
       })
 
@@ -79,7 +79,7 @@ btnCheckout.addEventListener('click', async () => {
     id_usuario: Number(user.id),
     total,
     direccion: "Dirección de prueba",
-    productos: carrito.map(p => ({ id_producto: Number(p.id), cantidad: p.cantidad }))
+    productos: carrito.map(p => ({ id_producto: p.id, cantidad: p.cantidad }))
   }
 
   try {

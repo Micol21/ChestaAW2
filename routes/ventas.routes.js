@@ -1,3 +1,5 @@
+
+import Producto from '../db/schemas/product.schema.js'
 import { Router } from "express"
 import mongoose from "mongoose"
 import Venta from "../db/schemas/venta.schema.js"
@@ -7,13 +9,25 @@ import path from 'path'
 
 const router = Router()
 
-// POST: Crear nueva venta
+// POST: Crear nueva venta y descontar stock
 router.post('/create', async (req, res) => {
+  
   const { id_usuario, fecha, total, direccion, productos } = req.body;
 
   try {
     await connectToDatabase();
 
+    // Descontar el stock de cada producto
+    for (const item of productos) {
+      const producto = await Producto.findById(item.id_producto)
+      if (producto) {
+        producto.stock -= item.cantidad
+        if (producto.stock < 0) producto.stock = 0 // Evitar stock negativo
+        await producto.save()
+      }
+    }
+
+    //Crear la venta
     const nuevaVenta = await Venta.create({
       id_usuario,
       fecha: fecha || new Date().toISOString().slice(0, 10),
@@ -22,17 +36,19 @@ router.post('/create', async (req, res) => {
       productos
     });
 
-    // Sincronizar ventas.json
-    const ruta = path.resolve('./data/ventas.json')
-    await syncToJsonFile(ruta, Venta)
+    //Sincronizar JSONs
+    const rutaVentas = path.resolve('./data/ventas.json')
+    const rutaProductos = path.resolve('./data/productos.json')
+    await syncToJsonFile(rutaVentas, Venta)
+    await syncToJsonFile(rutaProductos, Producto)
 
     res.status(201).json({
-      mensaje: "Venta registrada exitosamente",
+      mensaje: "Venta registrada y stock actualizado exitosamente",
       venta: nuevaVenta
     });
   } catch (error) {
     console.error("Error al registrar la venta:", error.message)
-  res.status(500).json({ mensaje: "Error al registrar la venta", error: error.message });
+    res.status(500).json({ mensaje: "Error al registrar la venta", error: error.message });
   }
 })
 

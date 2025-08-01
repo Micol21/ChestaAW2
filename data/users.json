@@ -133,5 +133,32 @@
     "pass": "$2b$08$TrWo58lz5rJodL0QGqeWTeqjNVhnj.uxOVp9Q6xtKjQuDD.F2RqAm",
     "id": 115,
     "__v": 0
+  },
+  {
+    "_id": "6863fb7f0a340b2f494b99e4",
+    "name": "Lupe",
+    "lastname": "Torres",
+    "username": "Lup48",
+    "pass": "$2b$08$2k2D31Y90UKfyaNIJ0f/H.YAldJ2hDKlHz5ksvyxZJnsy6PvepKWa",
+    "id": 116,
+    "__v": 0
+  },
+  {
+    "_id": "6863fce20a340b2f494b99f0",
+    "name": "Lupe",
+    "lastname": "Torres",
+    "username": "Lup101",
+    "pass": "$2b$08$YI7ck9iXAGBUYIsH05mXoufeYp4mrQbca1pgIwXt3Pcoe21Wspgam",
+    "id": 117,
+    "__v": 0
+  },
+  {
+    "_id": "688bf80b5d06b038a5d7fc6b",
+    "name": "admin",
+    "lastname": "admin",
+    "username": "admin",
+    "pass": "$2b$08$5luK3vZTf8IqBfuaSKEnE..G9RamdR0Yp1iubF9JNjU1/NWm8P6CK",
+    "id": 118,
+    "__v": 0
   }
 ]

@@ -8,7 +8,7 @@ const VentaSchema = new Schema({
   direccion: String,
   productos: [
     {
-      id_producto: Number,
+      id_producto: { type: Schema.Types.ObjectId, ref: 'product' },
       cantidad: Number
     }
   ]

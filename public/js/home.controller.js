@@ -1,8 +1,9 @@
 import { agregarAlCarrito } from './carrito.utils.js'
+import { actualizarVistaProductos } from './carrito.utils.js'
 
 const contenedor = document.getElementById('productosContainer')
 
-async function obtenerProductos() {
+export async function obtenerProductos() {
   try {
     const res = await fetch('http://localhost:5000/productos/')
     const productos = await res.json()
@@ -21,6 +22,7 @@ function renderizarProductos(productos) {
     const nombre = p.name || p.nombre || 'Producto'
     const precio = p.price || p.precio || 0
     const descripcion = p.desc || 'Sin descripción'
+    const stock = p.stock ?? 0
 
     const div = document.createElement('div')
     div.className = "bg-gray-800 p-4 rounded shadow flex flex-col justify-between"
@@ -29,10 +31,17 @@ function renderizarProductos(productos) {
       <h3 class="text-lg font-bold">${nombre}</h3>
       <p>${descripcion}</p>
       <p class="mt-2 font-semibold">$${precio}</p>
-      <button class="btnAgregar mt-4 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded" data-id="${id}">
-        Agregar al carrito
+      <p class="text-sm text-yellow-400 mt-1">Stock: ${stock}</p>
+      <button 
+        id="btnAgregar_${id}" 
+        class="btnAgregar mt-4 px-4 py-2 rounded text-white font-medium ${stock === 0 ? 'bg-gray-500 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'}"
+        data-id="${id}" 
+        ${stock === 0 ? 'disabled' : ''}
+      >
+        ${stock === 0 ? 'Sin stock' : 'Agregar al carrito'}
       </button>
     `
+
     contenedor.appendChild(div)
   })
 }
@@ -44,4 +53,6 @@ document.addEventListener('click', e => {
   }
 })
 
-obtenerProductos()
+obtenerProductos().then(() => {
+  actualizarVistaProductos()
+})

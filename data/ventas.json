@@ -188,5 +188,110 @@
       }
     ],
     "__v": 0
+  },
+  {
+    "_id": "6863fbc10a340b2f494b99e8",
+    "id_usuario": 116,
+    "fecha": "2025-07-01",
+    "total": 419999,
+    "direccion": "Dirección de prueba",
+    "productos": [
+      {
+        "id_producto": null,
+        "cantidad": 1,
+        "_id": "6863fbc10a340b2f494b99e9"
+      },
+      {
+        "id_producto": null,
+        "cantidad": 1,
+        "_id": "6863fbc10a340b2f494b99ea"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "6863fd240a340b2f494b99f4",
+    "id_usuario": 117,
+    "fecha": "2025-07-01",
+    "total": 821456,
+    "direccion": "Dirección de prueba",
+    "productos": [
+      {
+        "id_producto": null,
+        "cantidad": 1,
+        "_id": "6863fd240a340b2f494b99f5"
+      },
+      {
+        "id_producto": null,
+        "cantidad": 1,
+        "_id": "6863fd240a340b2f494b99f6"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "688bfc6f2e6600be9f176c0a",
+    "id_usuario": 118,
+    "fecha": "2025-07-31",
+    "total": 9999,
+    "direccion": "Dirección de prueba",
+    "productos": [
+      {
+        "id_producto": "68588243022347f844998cb2",
+        "cantidad": 1,
+        "_id": "688bfc6f2e6600be9f176c0b"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "688c00e01c6a43a8b9f2dc8c",
+    "id_usuario": 118,
+    "fecha": "2025-07-31",
+    "total": 789456,
+    "direccion": "Dirección de prueba",
+    "productos": [
+      {
+        "id_producto": "68588e31d3fa4a77b73f57e1",
+        "cantidad": 1,
+        "_id": "688c00e01c6a43a8b9f2dc8d"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "688c2040cf1afddece39f741",
+    "id_usuario": 118,
+    "fecha": "2025-08-01",
+    "total": 9999,
+    "direccion": "Dirección de prueba",
+    "productos": [
+      {
+        "id_producto": "68588243022347f844998cb2",
+        "cantidad": 1,
+        "_id": "688c2040cf1afddece39f742"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "688c22ccc9939bc073d40b41",
+    "id_usuario": 118,
+    "fecha": "2025-08-01",
+    "total": 419999,
+    "direccion": "Dirección de prueba",
+    "productos": [
+      {
+        "id_producto": "68588e31d3fa4a77b73f57e2",
+        "cantidad": 1,
+        "_id": "688c22ccc9939bc073d40b42"
+      },
+      {
+        "id_producto": "68588243022347f844998cb2",
+        "cantidad": 1,
+        "_id": "688c22ccc9939bc073d40b43"
+      }
+    ],
+    "__v": 0
   }
 ]

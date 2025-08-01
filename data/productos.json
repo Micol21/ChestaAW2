@@ -1,34 +1,38 @@
 [
   {
-    "id": "68588243022347f844998cb2",
+    "_id": "68588243022347f844998cb2",
     "name": "Celular Samsung",
     "desc": "Galaxy S21",
-    "price": 9999,
-    "stock": 10,
+    "price": "9999",
+    "stock": 7,
+    "__v": 0,
     "categoria": "Celular"
   },
   {
-    "id": "68588e31d3fa4a77b73f57e1",
+    "_id": "68588e31d3fa4a77b73f57e1",
     "name": "Notebook Lenovo",
     "desc": "Notebook Lenovo IdeaPad 15.6'' Intel i5 8GB RAM 512GB SSD",
-    "price": 789456,
+    "price": "789456",
     "stock": 0,
+    "__v": 0,
     "categoria": "Notebook"
   },
   {
-    "id": "68588e31d3fa4a77b73f57e2",
+    "_id": "68588e31d3fa4a77b73f57e2",
     "name": "Smart TV LG",
     "desc": "Smart TV LG 50'' 4K UHD webOS",
-    "price": 410000,
+    "price": "410000",
     "stock": 0,
+    "__v": 0,
     "categoria": "TV"
   },
   {
-    "id": "68588e31d3fa4a77b73f57e3",
+    "_id": "68588e31d3fa4a77b73f57e3",
     "name": "Teclado Mecánico",
     "desc": "Teclado mecánico RGB retroiluminado para gaming",
-    "price": 32000,
-    "stock": 0,
+    "price": "32000",
+    "stock": "0",
+    "__v": 0,
     "categoria": "Teclado"
   }
 ]
